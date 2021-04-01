@@ -26,7 +26,7 @@ func (L *LinkList) InsertLink(val int) *LinkNode {
 func (l *LinkList) ShowBackwards() {
 	node := l.head
 	for node != nil {
-		fmt.Printf("%+v\n", node)
+		fmt.Printf("%+v\n", node.data)
 		node = node.prev
 	}
 
@@ -41,10 +41,47 @@ func (l *LinkList) ShowForwards() {
 	}
 	node = lastNode
 	for node != nil {
-		fmt.Printf("%+v\n", node)
+		fmt.Printf("%+v\n", node.data)
 		node = node.next
 	}
 
+}
+
+func (l *LinkList) sorting() {
+	node := l.head
+	lastNode := l.head
+	for node != nil {
+		lastNode = node
+		node = node.prev
+	}
+	firstNode := lastNode
+	for firstNode.prev != nil {
+
+		firstNode = firstNode.next
+	}
+
+	current := firstNode
+	index := firstNode.next
+	for current != nil {
+		for index != nil {
+			if current.data > index.data {
+				temp := current.data
+				current.data = index.data
+				index.data = temp
+			}
+			index = index.next
+
+		}
+		current = current.next
+		index = firstNode
+	}
+
+	node = firstNode
+
+	for node != nil {
+		fmt.Printf("%+v\n", node.data)
+		node = node.next
+	}
 }
 
 func main() {
@@ -80,8 +117,10 @@ func main() {
 	node8.prev = node7
 	node7.next = node8
 
+	fmt.Println("---back to front--------")
 	link.ShowBackwards()
-	fmt.Println("-----------")
+	fmt.Println("-----front to back------")
 	link.ShowForwards()
-
+	fmt.Println("----Sorted-------")
+	link.sorting()
 }
